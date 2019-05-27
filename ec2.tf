@@ -33,11 +33,6 @@ resource "aws_instance" "swarm_master" {
     ]
   }
 
-  ebs_block_device {
-    device_name = "/dev/xvdb"
-    volume_type = "gp2"
-    volume_size = 2
-  }
   tags = {
     Name = "${var.Create_by}-swarm-master-${count.index}"
   }
@@ -72,13 +67,8 @@ resource "aws_instance" "swarm-worker" {
      "sudo bash -x  /tmp/swarm_join.sh"
      ]
   }
-  
-  ebs_block_device {
-    device_name = "/dev/xvdb"
-    volume_type = "gp2"
-    volume_size = 2
-  }
-  associate_public_ip_address = "false"
+
+ associate_public_ip_address = "false"
   tags = {
     Name = "${var.Create_by}-worker-${count.index}"
   }
