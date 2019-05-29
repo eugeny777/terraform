@@ -29,7 +29,10 @@ resource "aws_instance" "swarm_master" {
   provisioner "remote-exec" {
     inline = [
       "sudo bash -x /tmp/docker_install.sh",
-      "sudo bash -x /tmp/swarm_init.sh"
+      "sudo bash -x /tmp/swarm_init.sh",
+      "sudo curl -s -L \"https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose",
+      "sudo chmod +x /usr/local/bin/docker-compose",
+      "sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose"
     ]
   }
 
