@@ -86,17 +86,19 @@ resource "aws_instance" "jenkins-instance" {
     private_key="${file("YD.pem")}"
   }
   
+  
   provisioner "file" {
-    source      = "docker_install.sh"
-    destination = "/tmp/docker_install.sh"
+    source      = "jenkins_install.sh"
+    destination = "/tmp/jenkins_install.sh"
   }
   
   provisioner "remote-exec" {
     inline = [
-    "sudo bash -x /tmp/docker_install.sh"
-  ]
-  }
-  
+    "echo  \"${aws_instance.swarm_master.private_ip}  swarm_master\"|sudo tee -a  /etc/hosts",
+    "sudo bash -x /tmp/jenkins_install.sh"
+    ]
+  } 
+ 
   tags = {
     Name = "${var.Create_by}-jenkins"
   }
