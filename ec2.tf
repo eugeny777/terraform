@@ -4,6 +4,14 @@ provider "aws" {
     region     = "${var.zone}"
 }
 
+resource "aws_default_vpc" "default" {
+  tags = {
+    Name = "Default VPC"
+  }
+}
+
+
+
 resource "aws_instance" "swarm_master" {
   ami  = "ami-0ff760d16d9497662"
   instance_type = "t2.micro"
